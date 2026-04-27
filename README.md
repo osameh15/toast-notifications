@@ -189,9 +189,10 @@ A reactive `Ref<ToastInstance[]>` holding the current visible toasts. Use it for
 
 The container that renders the active toast list. Auto-mounted by default — only use this directly if `autoMount: false` or you want a second container.
 
-| Prop       | Type                                                                                              | Default          |
-| ---------- | ------------------------------------------------------------------------------------------------- | ---------------- |
-| `position` | `'top-left' \| 'top-center' \| 'top-right' \| 'bottom-left' \| 'bottom-center' \| 'bottom-right'` | `'bottom-right'` |
+| Prop       | Type                                                                                              | Default          | Description                                                                                                                                                                                                                                            |
+| ---------- | ------------------------------------------------------------------------------------------------- | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `position` | `'top-left' \| 'top-center' \| 'top-right' \| 'bottom-left' \| 'bottom-center' \| 'bottom-right'` | `'bottom-right'` | Where the container sits on screen.                                                                                                                                                                                                                    |
+| `teleport` | `boolean`                                                                                         | `true`           | Render the container into `document.body` via `<Teleport>` so `position: fixed` always references the viewport. Without this, an ancestor with `backdrop-filter`, `transform`, `filter`, or `will-change` becomes the containing block and the toast offsets break. Set `false` only if you have a specific reason to keep the container in its original DOM location. |
 
 ```vue
 <ToastContainer position="top-right" />
