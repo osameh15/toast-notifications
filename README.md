@@ -13,6 +13,7 @@ A beautiful, zero-dependency toast notification module for **Nuxt 3** — no Vue
 - 🔤 **Modern typography** — bundled **Shabnam** for Persian/Arabic + **Inter** for Latin (both opt-out)
 - 🎛 **Configurable** — max visible, default timeout, position, prefix, fonts
 - 🌐 **Auto RTL** — toasts containing Arabic/Persian script switch to `dir="rtl"` automatically: close button moves to the left, icon spacing flips, Shabnam renders the text
+- 🧹 **One-click "Hide all"** — when 2+ toasts are visible, a button (matching the toast width) appears above the stack to clear them all in one click
 
 ---
 
@@ -193,6 +194,8 @@ The container that renders the active toast list. Auto-mounted by default — on
 | ---------- | ------------------------------------------------------------------------------------------------- | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `position` | `'top-left' \| 'top-center' \| 'top-right' \| 'bottom-left' \| 'bottom-center' \| 'bottom-right'` | `'bottom-right'` | Where the container sits on screen.                                                                                                                                                                                                                    |
 | `teleport` | `boolean`                                                                                         | `true`           | Render the container into `document.body` via `<Teleport>` so `position: fixed` always references the viewport. Without this, an ancestor with `backdrop-filter`, `transform`, `filter`, or `will-change` becomes the containing block and the toast offsets break. Set `false` only if you have a specific reason to keep the container in its original DOM location. |
+| `showHideAllButton` | `boolean`                                                                                | `true`           | When `true`, a "Hide all" button is shown at the top of the stack whenever 2 or more toasts are visible. Click it to clear every toast at once. Set `false` to disable.                                                                                  |
+| `hideAllLabel`      | `string`                                                                                 | `'Hide all'`     | Text on the "Hide all" button. Override per-container, or pass a localized label (e.g. `'پاک کردن همه'`).                                                                                                                                                |
 
 ```vue
 <ToastContainer position="top-right" />
