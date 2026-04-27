@@ -47,6 +47,9 @@
   "dependencies": {
     "@nuxt/kit": "^3.13.0 || ^4.0.0"
   },
+  "overrides": {
+    "commander": "^13.0.0"
+  },
   "devDependencies": {
     "@nuxt/eslint-config": "^1.15.2",
     "@nuxt/module-builder": "^1.0.2",

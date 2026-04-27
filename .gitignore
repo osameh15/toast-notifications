@@ -8,3 +8,8 @@ dist
 .env.local
 playground/.nuxt
 playground/.output
+
+# Editor / tool local state
+.vscode/
+.idea/
+.claude/
