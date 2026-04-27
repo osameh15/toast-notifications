@@ -5,7 +5,7 @@
 
 A beautiful, zero-dependency toast notification module for **Nuxt 3** — no Vuetify or icon-font required. Drop it in, call `useToast()`, and you're done.
 
-- 🎨 **Identical look** to the original Datagen Cloud toast (dark gradient, colored borders, blurred backdrop)
+- 🎨 **Polished look** — dark radial gradient, colored borders per type, blurred backdrop
 - 🧩 **Standalone** — no Vuetify, no MDI, no extra CSS framework
 - ⚡️ **Auto-mounted** — no boilerplate, just call `useToast().success(...)`
 - 🧠 **Fully typed** — written in TypeScript with full IntelliSense
@@ -412,7 +412,7 @@ GitHub Actions ([`.github/workflows/ci.yml`](./.github/workflows/ci.yml)) runs o
 │   ├── app.vue
 │   └── pages/
 │       ├── index.vue                     # quick demo
-│       ├── test.vue                      # full toast-check.vue port (all sections)
+│       ├── test.vue                      # full test page covering every feature
 │       ├── positions.vue                 # all positions
 │       └── manual.vue                    # autoMount: false example
 ├── test/
