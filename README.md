@@ -49,8 +49,8 @@ Then add it to your `nuxt.config.ts`:
 
 ```ts
 export default defineNuxtConfig({
-  modules: ['nuxt-toast-notification'],
-})
+  modules: ["nuxt-toast-notification"],
+});
 ```
 
 That's it — `useToast()` is auto-imported and a `<ToastContainer>` is mounted automatically on the client.
@@ -61,16 +61,16 @@ That's it — `useToast()` is auto-imported and a `<ToastContainer>` is mounted 
 
 ```vue
 <script setup lang="ts">
-const toast = useToast()
+const toast = useToast();
 
 const onSave = async () => {
   try {
-    await api.save()
-    toast.success('Saved', 'Your changes have been saved.')
+    await api.save();
+    toast.success("Saved", "Your changes have been saved.");
   } catch (e) {
-    toast.error('Save failed', 'Could not reach the server. Try again.')
+    toast.error("Save failed", "Could not reach the server. Try again.");
   }
-}
+};
 </script>
 
 <template>
@@ -86,31 +86,31 @@ Configure under the `toast` key in `nuxt.config.ts`:
 
 ```ts
 export default defineNuxtConfig({
-  modules: ['nuxt-toast-notification'],
+  modules: ["nuxt-toast-notification"],
   toast: {
-    position: 'bottom-right',
+    position: "bottom-right",
     maxToasts: 3,
     defaultTimeout: 5000,
-    prefix: 'Toast',
+    prefix: "Toast",
     autoMount: true,
   },
-})
+});
 ```
 
-| Option           | Type                                                                                                                          | Default          | Description                                                                                                  |
-| ---------------- | ----------------------------------------------------------------------------------------------------------------------------- | ---------------- | ------------------------------------------------------------------------------------------------------------ |
-| `position`       | `'top-left' \| 'top-center' \| 'top-right' \| 'bottom-left' \| 'bottom-center' \| 'bottom-right'`                              | `'bottom-right'` | Where the auto-mounted container sits on screen.                                                             |
-| `maxToasts`      | `number`                                                                                                                      | `3`              | Maximum number of visible toasts. Older ones drop off the front when exceeded.                               |
-| `defaultTimeout` | `number`                                                                                                                      | `5000`           | Default auto-dismiss delay in ms. Use `0` per-call to keep a toast until manually closed.                    |
-| `prefix`         | `string`                                                                                                                      | `'Toast'`        | Component name prefix. With the default, components are `<ToastNotification>` and `<ToastContainer>`.        |
-| `autoMount`      | `boolean`                                                                                                                     | `true`           | When `true`, mounts a `<ToastContainer>` automatically on the client. Set `false` to mount it yourself.      |
+| Option           | Type                                                                                              | Default          | Description                                                                                             |
+| ---------------- | ------------------------------------------------------------------------------------------------- | ---------------- | ------------------------------------------------------------------------------------------------------- |
+| `position`       | `'top-left' \| 'top-center' \| 'top-right' \| 'bottom-left' \| 'bottom-center' \| 'bottom-right'` | `'bottom-right'` | Where the auto-mounted container sits on screen.                                                        |
+| `maxToasts`      | `number`                                                                                          | `3`              | Maximum number of visible toasts. Older ones drop off the front when exceeded.                          |
+| `defaultTimeout` | `number`                                                                                          | `5000`           | Default auto-dismiss delay in ms. Use `0` per-call to keep a toast until manually closed.               |
+| `prefix`         | `string`                                                                                          | `'Toast'`        | Component name prefix. With the default, components are `<ToastNotification>` and `<ToastContainer>`.   |
+| `autoMount`      | `boolean`                                                                                         | `true`           | When `true`, mounts a `<ToastContainer>` automatically on the client. Set `false` to mount it yourself. |
 
 ---
 
 ## Composable API — `useToast()`
 
 ```ts
-const toast = useToast()
+const toast = useToast();
 ```
 
 Returns an object with the following members:
@@ -121,19 +121,19 @@ Display a toast. Returns the toast `id` (a number) so you can dismiss it later w
 
 ```ts
 const id = toast.show({
-  type: 'info',
-  title: 'Heads up',
-  message: 'Build started.',
+  type: "info",
+  title: "Heads up",
+  message: "Build started.",
   timeout: 8000, // optional; falls back to defaultTimeout
-})
+});
 ```
 
-| Option    | Type                                                          | Required | Default                  |
-| --------- | ------------------------------------------------------------- | -------- | ------------------------ |
-| `type`    | `'success' \| 'healthy' \| 'warning' \| 'error' \| 'info'`    | no       | `'info'`                 |
-| `title`   | `string`                                                      | yes      | —                        |
-| `message` | `string`                                                      | yes      | —                        |
-| `timeout` | `number` (ms; `0` = persistent)                               | no       | module `defaultTimeout`  |
+| Option    | Type                                                       | Required | Default                 |
+| --------- | ---------------------------------------------------------- | -------- | ----------------------- |
+| `type`    | `'success' \| 'healthy' \| 'warning' \| 'error' \| 'info'` | no       | `'info'`                |
+| `title`   | `string`                                                   | yes      | —                       |
+| `message` | `string`                                                   | yes      | —                       |
+| `timeout` | `number` (ms; `0` = persistent)                            | no       | module `defaultTimeout` |
 
 > `'success'` is an alias for `'healthy'` — both render the same green theme.
 
@@ -153,9 +153,9 @@ Each returns the toast `id`.
 Manually dismiss a single toast by id.
 
 ```ts
-const id = toast.info('Long task', 'Working on it...')
+const id = toast.info("Long task", "Working on it...");
 // later:
-toast.remove(id)
+toast.remove(id);
 ```
 
 ### `clear()`
@@ -163,7 +163,7 @@ toast.remove(id)
 Dismiss every visible toast.
 
 ```ts
-toast.clear()
+toast.clear();
 ```
 
 ### `toasts`
@@ -186,9 +186,9 @@ A reactive `Ref<ToastInstance[]>` holding the current visible toasts. Use it for
 
 The container that renders the active toast list. Auto-mounted by default — only use this directly if `autoMount: false` or you want a second container.
 
-| Prop       | Type                                                                                                                          | Default          |
-| ---------- | ----------------------------------------------------------------------------------------------------------------------------- | ---------------- |
-| `position` | `'top-left' \| 'top-center' \| 'top-right' \| 'bottom-left' \| 'bottom-center' \| 'bottom-right'`                              | `'bottom-right'` |
+| Prop       | Type                                                                                              | Default          |
+| ---------- | ------------------------------------------------------------------------------------------------- | ---------------- |
+| `position` | `'top-left' \| 'top-center' \| 'top-right' \| 'bottom-left' \| 'bottom-center' \| 'bottom-right'` | `'bottom-right'` |
 
 ```vue
 <ToastContainer position="top-right" />
@@ -198,13 +198,13 @@ The container that renders the active toast list. Auto-mounted by default — on
 
 The single-toast component. You normally don't render this directly — `useToast()` and `<ToastContainer>` handle it. Exposed for cases where you want to embed a static toast inline.
 
-| Prop          | Type                                                          | Required | Default   |
-| ------------- | ------------------------------------------------------------- | -------- | --------- |
-| `modelValue`  | `boolean`                                                     | no       | `false`   |
-| `type`        | `'success' \| 'healthy' \| 'warning' \| 'error' \| 'info'`    | no       | `'info'`  |
-| `title`       | `string`                                                      | yes      | —         |
-| `message`     | `string`                                                      | yes      | —         |
-| `timeout`     | `number`                                                      | no       | `5000`    |
+| Prop         | Type                                                       | Required | Default  |
+| ------------ | ---------------------------------------------------------- | -------- | -------- |
+| `modelValue` | `boolean`                                                  | no       | `false`  |
+| `type`       | `'success' \| 'healthy' \| 'warning' \| 'error' \| 'info'` | no       | `'info'` |
+| `title`      | `string`                                                   | yes      | —        |
+| `message`    | `string`                                                   | yes      | —        |
+| `timeout`    | `number`                                                   | no       | `5000`   |
 
 Emits `update:modelValue` (so `v-model` works for show/hide).
 
@@ -221,12 +221,12 @@ Emits `update:modelValue` (so `v-model` works for show/hide).
 
 ## Toast types
 
-| Type        | Color (border + icon) | Use when…                                       |
-| ----------- | --------------------- | ----------------------------------------------- |
-| `healthy` (`success`) | `#30e0a1` (green)   | An action succeeded.                            |
-| `warning`   | `#FFD700` (yellow)    | Something needs attention but isn't broken.     |
-| `error`     | `#DC143C` (red)       | An action failed or a problem occurred.         |
-| `info`      | `#00FFFF` (cyan)      | Neutral information, status updates, hints.     |
+| Type                  | Color (border + icon) | Use when…                                   |
+| --------------------- | --------------------- | ------------------------------------------- |
+| `healthy` (`success`) | `#30e0a1` (green)     | An action succeeded.                        |
+| `warning`             | `#FFD700` (yellow)    | Something needs attention but isn't broken. |
+| `error`               | `#DC143C` (red)       | An action failed or a problem occurred.     |
+| `info`                | `#00FFFF` (cyan)      | Neutral information, status updates, hints. |
 
 Each type has a matching inline SVG icon (no icon-font required).
 
@@ -260,9 +260,9 @@ If you want full control over where the container lives — e.g., inside a speci
 ```ts
 // nuxt.config.ts
 export default defineNuxtConfig({
-  modules: ['nuxt-toast-notification'],
+  modules: ["nuxt-toast-notification"],
   toast: { autoMount: false },
-})
+});
 ```
 
 Then place a `<ToastContainer>` yourself, wherever you want it:
@@ -309,10 +309,10 @@ The module ships full type definitions. The exported types you may want to impor
 
 ```ts
 import type {
-  ToastType,        // 'success' | 'healthy' | 'warning' | 'error' | 'info'
-  ToastOptions,     // arg shape for show()
-  ToastInstance,    // shape of a toast in the toasts ref
-} from 'nuxt-toast-notification'
+  ToastType, // 'success' | 'healthy' | 'warning' | 'error' | 'info'
+  ToastOptions, // arg shape for show()
+  ToastInstance, // shape of a toast in the toasts ref
+} from "nuxt-toast-notification";
 ```
 
 Module options are also exported as `ModuleOptions`.

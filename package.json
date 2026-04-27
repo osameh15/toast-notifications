@@ -1,7 +1,7 @@
 {
   "name": "nuxt-toast-notification",
   "version": "0.1.0",
-  "description": "A beautiful, framework-agnostic toast notification module for Nuxt 3 — no Vuetify required.",
+  "description": "A beautiful, framework-agnostic toast notification module for Nuxt 3 and Nuxt 4 — no Vuetify required.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/osameh15/toast-notifications.git"
@@ -24,20 +24,19 @@
   "exports": {
     ".": {
       "types": "./dist/types.d.mts",
-      "import": "./dist/module.mjs",
-      "require": "./dist/module.cjs"
+      "import": "./dist/module.mjs"
     }
   },
-  "main": "./dist/module.cjs",
+  "main": "./dist/module.mjs",
   "types": "./dist/types.d.mts",
   "files": [
     "dist"
   ],
   "scripts": {
     "prepack": "nuxt-module-build build",
-    "dev": "nuxi dev playground",
-    "dev:build": "nuxi build playground",
-    "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
+    "dev": "nuxt dev playground",
+    "dev:build": "nuxt build playground",
+    "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxt prepare playground",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "test": "vitest run",
@@ -46,18 +45,18 @@
     "release": "npm run lint && npm run test && npm run prepack && npm publish"
   },
   "dependencies": {
-    "@nuxt/kit": "^3.13.0"
+    "@nuxt/kit": "^3.13.0 || ^4.0.0"
   },
   "devDependencies": {
-    "@nuxt/eslint-config": "^0.5.7",
-    "@nuxt/module-builder": "^0.8.4",
-    "@nuxt/schema": "^3.13.0",
+    "@nuxt/eslint-config": "^1.15.2",
+    "@nuxt/module-builder": "^1.0.2",
+    "@nuxt/schema": "^4.4.2",
     "@types/node": "^22.0.0",
     "@vitejs/plugin-vue": "^5.1.4",
     "@vue/test-utils": "^2.4.6",
     "eslint": "^9.10.0",
     "happy-dom": "^15.7.4",
-    "nuxt": "^3.13.0",
+    "nuxt": "^4.4.2",
     "typescript": "^5.5.0",
     "vitest": "^2.1.1",
     "vue-tsc": "^2.0.0"

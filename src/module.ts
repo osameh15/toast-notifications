@@ -6,13 +6,13 @@ import {
   createResolver,
 } from '@nuxt/kit'
 
-export type ToastPosition =
-  | 'top-right'
-  | 'top-left'
-  | 'bottom-right'
-  | 'bottom-left'
-  | 'top-center'
-  | 'bottom-center'
+export type ToastPosition
+  = | 'top-right'
+    | 'top-left'
+    | 'bottom-right'
+    | 'bottom-left'
+    | 'top-center'
+    | 'bottom-center'
 
 export interface ModuleOptions {
   /** Default position of the toast container. Defaults to `bottom-right`. */
@@ -46,7 +46,7 @@ export default defineNuxtModule<ModuleOptions>({
     name: 'nuxt-toast-notification',
     configKey: 'toast',
     compatibility: {
-      nuxt: '^3.0.0',
+      nuxt: '^3.13.0 || ^4.0.0',
     },
   },
   defaults: {

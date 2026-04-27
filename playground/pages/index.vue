@@ -2,7 +2,9 @@
   <div class="demo">
     <header>
       <h1>nuxt-toast-notification</h1>
-      <p class="tagline">A beautiful, framework-free toast notification module for Nuxt 3.</p>
+      <p class="tagline">
+        A beautiful, framework-free toast notification module for Nuxt 3.
+      </p>
       <nav>
         <NuxtLink to="/">Quick demo</NuxtLink>
         <NuxtLink to="/positions">Positions</NuxtLink>
@@ -16,10 +18,30 @@
         <code>toast.success/warning/error/info(title, message, timeout?)</code>
       </p>
       <div class="grid">
-        <button class="btn success" @click="onSuccess">success()</button>
-        <button class="btn warning" @click="onWarning">warning()</button>
-        <button class="btn error" @click="onError">error()</button>
-        <button class="btn info" @click="onInfo">info()</button>
+        <button
+          class="btn success"
+          @click="onSuccess"
+        >
+          success()
+        </button>
+        <button
+          class="btn warning"
+          @click="onWarning"
+        >
+          warning()
+        </button>
+        <button
+          class="btn error"
+          @click="onError"
+        >
+          error()
+        </button>
+        <button
+          class="btn info"
+          @click="onInfo"
+        >
+          info()
+        </button>
       </div>
     </section>
 
@@ -29,10 +51,30 @@
         <code>toast.show({ type, title, message, timeout })</code>
       </p>
       <div class="grid">
-        <button class="btn" @click="onCustom">10s timeout</button>
-        <button class="btn" @click="onPersistent">Persistent (timeout: 0)</button>
-        <button class="btn" @click="onSpam">Spam 5 toasts</button>
-        <button class="btn danger-outline" @click="onClear">Clear all</button>
+        <button
+          class="btn"
+          @click="onCustom"
+        >
+          10s timeout
+        </button>
+        <button
+          class="btn"
+          @click="onPersistent"
+        >
+          Persistent (timeout: 0)
+        </button>
+        <button
+          class="btn"
+          @click="onSpam"
+        >
+          Spam 5 toasts
+        </button>
+        <button
+          class="btn danger-outline"
+          @click="onClear"
+        >
+          Clear all
+        </button>
       </div>
     </section>
 

@@ -20,7 +20,12 @@
       top-center one (because both subscribe to the same toast state).
     </p>
 
-    <button class="btn" @click="onTrigger">Show toast</button>
+    <button
+      class="btn"
+      @click="onTrigger"
+    >
+      Show toast
+    </button>
 
     <ToastContainer position="top-center" />
   </div>

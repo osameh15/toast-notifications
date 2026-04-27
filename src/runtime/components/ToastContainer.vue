@@ -17,13 +17,13 @@
 import ToastNotification from './ToastNotification.vue'
 import { useToast } from '../composables/useToast'
 
-type Position =
-  | 'top-right'
-  | 'top-left'
-  | 'bottom-right'
-  | 'bottom-left'
-  | 'top-center'
-  | 'bottom-center'
+type Position
+  = | 'top-right'
+    | 'top-left'
+    | 'bottom-right'
+    | 'bottom-left'
+    | 'top-center'
+    | 'bottom-center'
 
 withDefaults(defineProps<{ position?: Position }>(), {
   position: 'bottom-right',

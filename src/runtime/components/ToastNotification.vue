@@ -23,20 +23,37 @@
           stroke-linejoin="round"
           aria-hidden="true"
         >
-          <line x1="18" y1="6" x2="6" y2="18" />
-          <line x1="6" y1="6" x2="18" y2="18" />
+          <line
+            x1="18"
+            y1="6"
+            x2="6"
+            y2="18"
+          />
+          <line
+            x1="6"
+            y1="6"
+            x2="18"
+            y2="18"
+          />
         </svg>
       </button>
 
       <div class="toast-header">
-        <span class="toast-icon" :style="{ color: iconColor }">
+        <span
+          class="toast-icon"
+          :style="{ color: iconColor }"
+        >
           <component :is="iconComponent" />
         </span>
-        <h3 class="toast-title">{{ title }}</h3>
+        <h3 class="toast-title">
+          {{ title }}
+        </h3>
       </div>
 
       <div class="toast-body">
-        <p class="toast-message">{{ message }}</p>
+        <p class="toast-message">
+          {{ message }}
+        </p>
       </div>
     </div>
   </transition>
@@ -67,8 +84,10 @@ const emit = defineEmits<{ 'update:modelValue': [boolean] }>()
 
 const isVisible = ref(props.modelValue)
 
-watch(() => props.modelValue, (v) => { isVisible.value = v })
-watch(isVisible, (v) => emit('update:modelValue', v))
+watch(() => props.modelValue, (v) => {
+  isVisible.value = v
+})
+watch(isVisible, v => emit('update:modelValue', v))
 
 const normalizedType = computed<Exclude<PropType, 'success'>>(() =>
   props.type === 'success' ? 'healthy' : props.type,
@@ -82,11 +101,11 @@ const iconColor = computed(() => ({
 }[normalizedType.value]))
 
 const svgAttrs = {
-  width: 32,
-  height: 32,
-  viewBox: '0 0 24 24',
-  fill: 'none',
-  stroke: 'currentColor',
+  'width': 32,
+  'height': 32,
+  'viewBox': '0 0 24 24',
+  'fill': 'none',
+  'stroke': 'currentColor',
   'stroke-width': 2,
   'stroke-linecap': 'round',
   'stroke-linejoin': 'round',

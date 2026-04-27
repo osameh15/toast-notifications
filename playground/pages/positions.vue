@@ -23,12 +23,42 @@
     <section>
       <h2>Trigger a toast (will appear bottom-right here)</h2>
       <div class="grid">
-        <button class="btn" @click="trigger('top-right')">top-right</button>
-        <button class="btn" @click="trigger('top-left')">top-left</button>
-        <button class="btn" @click="trigger('top-center')">top-center</button>
-        <button class="btn" @click="trigger('bottom-right')">bottom-right</button>
-        <button class="btn" @click="trigger('bottom-left')">bottom-left</button>
-        <button class="btn" @click="trigger('bottom-center')">bottom-center</button>
+        <button
+          class="btn"
+          @click="trigger('top-right')"
+        >
+          top-right
+        </button>
+        <button
+          class="btn"
+          @click="trigger('top-left')"
+        >
+          top-left
+        </button>
+        <button
+          class="btn"
+          @click="trigger('top-center')"
+        >
+          top-center
+        </button>
+        <button
+          class="btn"
+          @click="trigger('bottom-right')"
+        >
+          bottom-right
+        </button>
+        <button
+          class="btn"
+          @click="trigger('bottom-left')"
+        >
+          bottom-left
+        </button>
+        <button
+          class="btn"
+          @click="trigger('bottom-center')"
+        >
+          bottom-center
+        </button>
       </div>
     </section>
   </div>
