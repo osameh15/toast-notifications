@@ -167,4 +167,45 @@ describe('useToast', () => {
       expect(toasts.value).toHaveLength(5)
     })
   })
+
+  describe('public config + setConfig()', () => {
+    it('exposes the current config as a readonly reactive object', () => {
+      const { config } = useToast()
+      expect(config.maxToasts).toBe(3)
+      expect(config.defaultTimeout).toBe(5000)
+    })
+
+    it('reflects updates from setConfig() reactively', () => {
+      const { config, setConfig } = useToast()
+      expect(config.maxToasts).toBe(3)
+      setConfig({ maxToasts: 7 })
+      expect(config.maxToasts).toBe(7)
+    })
+
+    it('immediately drops the oldest toasts when maxToasts decreases', () => {
+      const { show, toasts, setConfig } = useToast()
+      _setToastConfig({ maxToasts: 5 })
+
+      show({ title: '1', message: '1', timeout: 0 })
+      show({ title: '2', message: '2', timeout: 0 })
+      show({ title: '3', message: '3', timeout: 0 })
+      show({ title: '4', message: '4', timeout: 0 })
+      show({ title: '5', message: '5', timeout: 0 })
+      expect(toasts.value).toHaveLength(5)
+
+      setConfig({ maxToasts: 2 })
+      expect(toasts.value).toHaveLength(2)
+      expect(toasts.value.map(t => t.title)).toEqual(['4', '5'])
+    })
+
+    it('does not drop toasts when maxToasts increases', () => {
+      const { show, toasts, setConfig } = useToast()
+      show({ title: '1', message: '1', timeout: 0 })
+      show({ title: '2', message: '2', timeout: 0 })
+      expect(toasts.value).toHaveLength(2)
+
+      setConfig({ maxToasts: 10 })
+      expect(toasts.value).toHaveLength(2)
+    })
+  })
 })

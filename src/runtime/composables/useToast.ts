@@ -1,4 +1,5 @@
-import { ref } from 'vue'
+import { ref, reactive, readonly } from 'vue'
+import type { DeepReadonly } from 'vue'
 
 export type ToastType = 'success' | 'healthy' | 'warning' | 'error' | 'info'
 
@@ -19,7 +20,7 @@ export interface ToastInstance {
   visible: boolean
 }
 
-interface ToastConfig {
+export interface ToastConfig {
   maxToasts: number
   defaultTimeout: number
 }
@@ -27,16 +28,33 @@ interface ToastConfig {
 const toasts = ref<ToastInstance[]>([])
 let nextId = 0
 
-const config: ToastConfig = {
+const config = reactive<ToastConfig>({
   maxToasts: 3,
   defaultTimeout: 5000,
+})
+
+/**
+ * Update one or more runtime settings. Reactive — anywhere `config` is read
+ * (templates, computed) re-runs on change.
+ *
+ * If `maxToasts` is decreased below the current visible count, the oldest
+ * toasts are dropped immediately so the visible stack always satisfies the
+ * new limit.
+ */
+const setConfig = (next: Partial<ToastConfig>): void => {
+  if (typeof next.maxToasts === 'number') {
+    config.maxToasts = next.maxToasts
+    while (toasts.value.length > config.maxToasts) {
+      toasts.value.shift()
+    }
+  }
+  if (typeof next.defaultTimeout === 'number') {
+    config.defaultTimeout = next.defaultTimeout
+  }
 }
 
-/** Internal: invoked by the auto-mount plugin to apply user module options. */
-export const _setToastConfig = (next: Partial<ToastConfig>): void => {
-  if (typeof next.maxToasts === 'number') config.maxToasts = next.maxToasts
-  if (typeof next.defaultTimeout === 'number') config.defaultTimeout = next.defaultTimeout
-}
+/** @deprecated Use `useToast().setConfig(...)` instead. Kept for the auto-mount plugin. */
+export const _setToastConfig = setConfig
 
 export const useToast = () => {
   const show = ({ type = 'info', title, message, timeout }: ToastOptions): number => {
@@ -82,6 +100,8 @@ export const useToast = () => {
   const info = (title: string, message: string, timeout?: number) =>
     show({ type: 'info', title, message, timeout })
 
+  const readonlyConfig: DeepReadonly<ToastConfig> = readonly(config)
+
   return {
     toasts,
     show,
@@ -91,5 +111,9 @@ export const useToast = () => {
     warning,
     error,
     info,
+    /** Read-only reactive view of the current runtime config. */
+    config: readonlyConfig,
+    /** Update runtime config. Trims excess toasts when `maxToasts` decreases. */
+    setConfig,
   }
 }

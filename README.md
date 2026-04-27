@@ -182,6 +182,29 @@ A reactive `Ref<ToastInstance[]>` holding the current visible toasts. Use it for
 </template>
 ```
 
+### `config` and `setConfig(partial)`
+
+Reactive read-only view of the current runtime config plus a setter to update it at runtime — useful for in-app preferences or admin panels:
+
+```vue
+<script setup lang="ts">
+const { config, setConfig } = useToast();
+
+// Show current limit anywhere in your UI
+// {{ config.maxToasts }} reactively updates
+
+// Let users adjust it
+const onChange = (n: number) => setConfig({ maxToasts: n });
+</script>
+```
+
+| Field            | Type     | Description                                                                                                      |
+| ---------------- | -------- | ---------------------------------------------------------------------------------------------------------------- |
+| `maxToasts`      | `number` | Visible limit. Decreasing this value **immediately drops the oldest toasts** until the stack fits the new limit. |
+| `defaultTimeout` | `number` | Auto-dismiss delay (ms) for `toast.show(...)` calls that don't pass `timeout`.                                   |
+
+`setConfig` accepts a `Partial<ToastConfig>` — pass only the fields you want to change.
+
 ---
 
 ## Component API
