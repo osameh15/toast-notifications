@@ -184,8 +184,11 @@ defineExpose({ close })
   color: white;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   pointer-events: auto;
-  font-family: 'Shabnam', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Inter', 'Shabnam', system-ui, -apple-system, BlinkMacSystemFont,
+    'Segoe UI Variable Text', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-feature-settings: 'cv11', 'ss01', 'ss03';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   box-sizing: border-box;
 }
 

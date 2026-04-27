@@ -7,6 +7,7 @@
       </p>
       <nav>
         <NuxtLink to="/">Quick demo</NuxtLink>
+        <NuxtLink to="/test">Test page</NuxtLink>
         <NuxtLink to="/positions">Positions</NuxtLink>
         <NuxtLink to="/manual">Manual mount</NuxtLink>
       </nav>

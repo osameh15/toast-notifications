@@ -10,8 +10,9 @@ A beautiful, zero-dependency toast notification module for **Nuxt 3** — no Vue
 - ⚡️ **Auto-mounted** — no boilerplate, just call `useToast().success(...)`
 - 🧠 **Fully typed** — written in TypeScript with full IntelliSense
 - 🪟 **6 positions** — `top-left`, `top-center`, `top-right`, `bottom-left`, `bottom-center`, `bottom-right`
-- 🎛 **Configurable** — max visible, default timeout, position, prefix
-- 📦 **Tiny** — single component, single composable, no runtime dependencies beyond Vue
+- 🔤 **Modern typography** — bundled **Shabnam** for Persian/Arabic + **Inter** for Latin (both opt-out)
+- 🎛 **Configurable** — max visible, default timeout, position, prefix, fonts
+- 🌐 **RTL-ready** — Persian script renders with the bundled Shabnam font automatically
 
 ---
 
@@ -104,6 +105,8 @@ export default defineNuxtConfig({
 | `defaultTimeout` | `number`                                                                                          | `5000`           | Default auto-dismiss delay in ms. Use `0` per-call to keep a toast until manually closed.               |
 | `prefix`         | `string`                                                                                          | `'Toast'`        | Component name prefix. With the default, components are `<ToastNotification>` and `<ToastContainer>`.   |
 | `autoMount`      | `boolean`                                                                                         | `true`           | When `true`, mounts a `<ToastContainer>` automatically on the client. Set `false` to mount it yourself. |
+| `loadShabnamFont`| `boolean`                                                                                         | `true`           | Inject the bundled Persian "Shabnam" font (5 weights, woff2). Uses `unicode-range` so the file is only downloaded for documents that contain Arabic / Persian characters. |
+| `loadInterFont`  | `boolean`                                                                                         | `true`           | Add Inter (Google Fonts) as the modern English UI typeface via a `<link>` in the head. Set `false` to self-host fonts or avoid the network request. |
 
 ---
 
@@ -299,7 +302,31 @@ All styles are in `<style scoped>` blocks inside the components. Because they us
 }
 ```
 
-The component uses the `Shabnam` font family by default, with a system-font fallback chain. To force a different font, override `font-family` on `.toast-card`, `.toast-title`, and `.toast-message`.
+### Fonts
+
+Two fonts are configured by default:
+
+- **Inter** (English / Latin): loaded from Google Fonts via a `<link rel="stylesheet">`. Disable with `loadInterFont: false`.
+- **Shabnam** (Persian / Arabic): bundled inside the package as woff2 (5 weights — Thin/Light/Regular/Medium/Bold) and registered with `unicode-range` so the browser only downloads the files when the page actually contains Arabic-script characters. Disable with `loadShabnamFont: false`.
+
+The font stack used by toast text is:
+
+```css
+font-family:
+  'Inter',           /* Latin, modern */
+  'Shabnam',         /* Persian / Arabic */
+  system-ui,
+  -apple-system,
+  BlinkMacSystemFont,
+  'Segoe UI Variable Text',
+  'Segoe UI',
+  Roboto,
+  'Helvetica Neue',
+  Arial,
+  sans-serif;
+```
+
+If you self-host fonts or want a different typeface, disable the loaders and override `font-family` on `.toast-card`, `.toast-title`, and `.toast-message` from your own stylesheet.
 
 ---
 
@@ -371,6 +398,9 @@ GitHub Actions ([`.github/workflows/ci.yml`](./.github/workflows/ci.yml)) runs o
 ├── src/
 │   ├── module.ts                         # Nuxt module entry
 │   └── runtime/
+│       ├── assets/
+│       │   ├── fonts/Shabnam/            # bundled Persian font (5 weights, woff2)
+│       │   └── styles/toast-fonts.css    # @font-face declarations
 │       ├── components/
 │       │   ├── ToastNotification.vue
 │       │   └── ToastContainer.vue
@@ -382,6 +412,7 @@ GitHub Actions ([`.github/workflows/ci.yml`](./.github/workflows/ci.yml)) runs o
 │   ├── app.vue
 │   └── pages/
 │       ├── index.vue                     # quick demo
+│       ├── test.vue                      # full toast-check.vue port (all sections)
 │       ├── positions.vue                 # all positions
 │       └── manual.vue                    # autoMount: false example
 ├── test/

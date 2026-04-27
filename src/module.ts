@@ -29,6 +29,18 @@ export interface ModuleOptions {
    * yourself somewhere in your app (e.g. `app.vue`). Defaults to `true`.
    */
   autoMount?: boolean
+  /**
+   * Inject bundled Persian "Shabnam" font (5 weights, woff2) via @font-face.
+   * Uses unicode-range so the file is only downloaded for documents that
+   * actually contain Arabic / Persian script. Defaults to `true`.
+   */
+  loadShabnamFont?: boolean
+  /**
+   * Add Inter (Google Fonts) as the modern English UI typeface via a
+   * `<link>` in the document head. Set `false` if you self-host fonts or
+   * want to avoid the network request. Defaults to `true`.
+   */
+  loadInterFont?: boolean
 }
 
 declare module '@nuxt/schema' {
@@ -55,6 +67,8 @@ export default defineNuxtModule<ModuleOptions>({
     defaultTimeout: 5000,
     prefix: 'Toast',
     autoMount: true,
+    loadShabnamFont: true,
+    loadInterFont: true,
   },
   setup(options, nuxt) {
     const resolver = createResolver(import.meta.url)
@@ -78,6 +92,32 @@ export default defineNuxtModule<ModuleOptions>({
       name: 'useToast',
       from: resolver.resolve('./runtime/composables/useToast'),
     })
+
+    if (options.loadShabnamFont) {
+      nuxt.options.css = nuxt.options.css || []
+      nuxt.options.css.push(resolver.resolve('./runtime/assets/styles/toast-fonts.css'))
+    }
+
+    if (options.loadInterFont) {
+      nuxt.options.app = nuxt.options.app || {}
+      nuxt.options.app.head = nuxt.options.app.head || {}
+      nuxt.options.app.head.link = nuxt.options.app.head.link || []
+      nuxt.options.app.head.link.push(
+        {
+          rel: 'preconnect',
+          href: 'https://fonts.googleapis.com',
+        },
+        {
+          rel: 'preconnect',
+          href: 'https://fonts.gstatic.com',
+          crossorigin: '',
+        },
+        {
+          rel: 'stylesheet',
+          href: 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap',
+        },
+      )
+    }
 
     if (options.autoMount) {
       addPlugin({
