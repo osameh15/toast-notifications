@@ -12,7 +12,7 @@ A beautiful, zero-dependency toast notification module for **Nuxt 3** — no Vue
 - 🪟 **6 positions** — `top-left`, `top-center`, `top-right`, `bottom-left`, `bottom-center`, `bottom-right`
 - 🔤 **Modern typography** — bundled **Shabnam** for Persian/Arabic + **Inter** for Latin (both opt-out)
 - 🎛 **Configurable** — max visible, default timeout, position, prefix, fonts
-- 🌐 **RTL-ready** — Persian script renders with the bundled Shabnam font automatically
+- 🌐 **Auto RTL** — toasts containing Arabic/Persian script switch to `dir="rtl"` automatically: close button moves to the left, icon spacing flips, Shabnam renders the text
 
 ---
 

@@ -88,4 +88,27 @@ describe('ToastNotification', () => {
     })
     expect(wrapper.find('.toast-card').attributes('role')).toBe('alert')
   })
+
+  describe('direction (RTL auto-detection)', () => {
+    it('uses dir="ltr" for Latin text', () => {
+      const wrapper = mount(ToastNotification, {
+        props: { modelValue: true, title: 'Saved', message: 'Your changes are saved.' },
+      })
+      expect(wrapper.find('.toast-card').attributes('dir')).toBe('ltr')
+    })
+
+    it('switches to dir="rtl" when title contains Persian script', () => {
+      const wrapper = mount(ToastNotification, {
+        props: { modelValue: true, title: 'عملیات موفق', message: 'Saved.' },
+      })
+      expect(wrapper.find('.toast-card').attributes('dir')).toBe('rtl')
+    })
+
+    it('switches to dir="rtl" when message contains Arabic script', () => {
+      const wrapper = mount(ToastNotification, {
+        props: { modelValue: true, title: 'Saved', message: 'تم الحفظ بنجاح' },
+      })
+      expect(wrapper.find('.toast-card').attributes('dir')).toBe('rtl')
+    })
+  })
 })

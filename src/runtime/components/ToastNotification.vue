@@ -3,6 +3,7 @@
     <div
       v-if="isVisible"
       :class="['toast-card', `toast-${normalizedType}`]"
+      :dir="direction"
       role="alert"
       aria-live="polite"
     >
@@ -99,6 +100,17 @@ const iconColor = computed(() => ({
   error: '#DC143C',
   info: '#00FFFF',
 }[normalizedType.value]))
+
+// Arabic, Persian, Urdu, etc. — script blocks that should render RTL.
+//   U+0600-06FF Arabic
+//   U+0750-077F Arabic Supplement
+//   U+08A0-08FF Arabic Extended-A
+//   U+FB50-FDFF Arabic Presentation Forms-A
+//   U+FE70-FEFE Arabic Presentation Forms-B (omits U+FEFF / ZWNBSP)
+const RTL_SCRIPT = /[؀-ۿݐ-ݿࢠ-ࣿﭐ-﷿ﹰ-﻾]/
+const direction = computed<'rtl' | 'ltr'>(() =>
+  RTL_SCRIPT.test(props.title) || RTL_SCRIPT.test(props.message) ? 'rtl' : 'ltr',
+)
 
 const svgAttrs = {
   'width': 32,
@@ -215,6 +227,13 @@ defineExpose({ close })
   z-index: 10;
   transition: background-color 0.2s ease;
 }
+
+/* Move close button to the start (= left) when the toast is RTL */
+.toast-card[dir='rtl'] .toast-close-btn {
+  right: auto;
+  left: 8px;
+}
+
 .toast-close-btn:hover {
   background: rgba(255, 255, 255, 0.1);
 }
@@ -233,7 +252,7 @@ defineExpose({ close })
 .toast-icon {
   display: inline-flex;
   align-items: center;
-  margin-right: 12px;
+  margin-inline-end: 12px;
   line-height: 0;
 }
 

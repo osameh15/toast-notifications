@@ -1,92 +1,127 @@
 <template>
-  <div class="demo">
-    <header>
-      <h1>nuxt-toast-notification</h1>
-      <p class="tagline">
-        A beautiful, framework-free toast notification module for Nuxt 3.
-      </p>
-      <nav>
-        <NuxtLink to="/">Quick demo</NuxtLink>
-        <NuxtLink to="/test">Test page</NuxtLink>
-        <NuxtLink to="/positions">Positions</NuxtLink>
-        <NuxtLink to="/manual">Manual mount</NuxtLink>
-      </nav>
-    </header>
+  <section class="test-card">
+    <h2>
+      <span class="section-icon">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        ><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" /></svg>
+      </span>
+      Convenience methods
+    </h2>
+    <p class="hint">
+      <code>toast.success / warning / error / info(title, message, timeout?)</code>
+    </p>
+    <div class="grid cols-4">
+      <button
+        class="btn btn-success"
+        @click="onSuccess"
+      >
+        success()
+      </button>
+      <button
+        class="btn btn-warning"
+        @click="onWarning"
+      >
+        warning()
+      </button>
+      <button
+        class="btn btn-error"
+        @click="onError"
+      >
+        error()
+      </button>
+      <button
+        class="btn btn-info"
+        @click="onInfo"
+      >
+        info()
+      </button>
+    </div>
+  </section>
 
-    <section>
-      <h2>Convenience methods</h2>
-      <p class="hint">
-        <code>toast.success/warning/error/info(title, message, timeout?)</code>
-      </p>
-      <div class="grid">
-        <button
-          class="btn success"
-          @click="onSuccess"
-        >
-          success()
-        </button>
-        <button
-          class="btn warning"
-          @click="onWarning"
-        >
-          warning()
-        </button>
-        <button
-          class="btn error"
-          @click="onError"
-        >
-          error()
-        </button>
-        <button
-          class="btn info"
-          @click="onInfo"
-        >
-          info()
-        </button>
-      </div>
-    </section>
+  <section class="test-card">
+    <h2>
+      <span class="section-icon">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        ><polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" /></svg>
+      </span>
+      Custom <code>show()</code>
+    </h2>
+    <p class="hint">
+      <code>toast.show({ type, title, message, timeout })</code>
+    </p>
+    <div class="grid cols-4">
+      <button
+        class="btn btn-outline"
+        @click="onCustom"
+      >
+        10s timeout
+      </button>
+      <button
+        class="btn btn-outline"
+        @click="onPersistent"
+      >
+        Persistent (timeout: 0)
+      </button>
+      <button
+        class="btn btn-tonal"
+        @click="onSpam"
+      >
+        Spam 5 toasts
+      </button>
+      <button
+        class="btn btn-tonal-danger"
+        @click="onClear"
+      >
+        Clear all
+      </button>
+    </div>
+  </section>
 
-    <section>
-      <h2>Custom <code>show()</code></h2>
-      <p class="hint">
-        <code>toast.show({ type, title, message, timeout })</code>
-      </p>
-      <div class="grid">
-        <button
-          class="btn"
-          @click="onCustom"
-        >
-          10s timeout
-        </button>
-        <button
-          class="btn"
-          @click="onPersistent"
-        >
-          Persistent (timeout: 0)
-        </button>
-        <button
-          class="btn"
-          @click="onSpam"
-        >
-          Spam 5 toasts
-        </button>
-        <button
-          class="btn danger-outline"
-          @click="onClear"
-        >
-          Clear all
-        </button>
-      </div>
-    </section>
-
-    <section>
-      <h2>Live state</h2>
-      <p class="hint">
-        Active toasts: <strong>{{ toasts.length }}</strong> /
-        max {{ 3 }}
-      </p>
-    </section>
-  </div>
+  <section class="test-card">
+    <h2>
+      <span class="section-icon">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        ><circle
+          cx="12"
+          cy="12"
+          r="10"
+        /><line
+          x1="12"
+          y1="8"
+          x2="12"
+          y2="12"
+        /><line
+          x1="12"
+          y1="16"
+          x2="12.01"
+          y2="16"
+        /></svg>
+      </span>
+      Live state
+    </h2>
+    <p class="hint">
+      Active toasts: <code>{{ toasts.length }}</code> /
+      max <code>3</code>
+    </p>
+  </section>
 </template>
 
 <script setup lang="ts">
@@ -128,80 +163,3 @@ const onSpam = async () => {
 
 const onClear = () => toast.clear()
 </script>
-
-<style scoped>
-.demo {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  max-width: 760px;
-  margin: 60px auto;
-  padding: 24px;
-  color: #1a1a1a;
-}
-
-header h1 {
-  margin: 0 0 8px;
-  font-size: 32px;
-  font-weight: 700;
-}
-header .tagline {
-  margin: 0 0 16px;
-  color: #555;
-}
-nav {
-  display: flex;
-  gap: 16px;
-  margin-bottom: 16px;
-  border-bottom: 1px solid #e5e5e5;
-  padding-bottom: 12px;
-}
-nav a {
-  color: #2563eb;
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: 500;
-}
-nav a:hover { text-decoration: underline; }
-nav a.router-link-exact-active { color: #1a1a1a; font-weight: 600; }
-
-section { margin-top: 32px; }
-section h2 { font-size: 18px; margin: 0 0 8px; color: #1a1a1a; }
-.hint {
-  margin: 0 0 16px;
-  color: #666;
-  font-size: 13px;
-}
-.hint code {
-  background: #f3f4f6;
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-size: 12px;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 12px;
-}
-
-.btn {
-  padding: 12px 16px;
-  border-radius: 8px;
-  border: 1px solid #d0d0d0;
-  background: #fff;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.15s;
-  font-family: inherit;
-}
-.btn:hover {
-  background: #f5f5f5;
-  border-color: #aaa;
-}
-.btn.success { background: #30e0a1; color: #fff; border-color: #30e0a1; }
-.btn.warning { background: #ffd700; color: #1a1a1a; border-color: #ffd700; }
-.btn.error   { background: #dc143c; color: #fff; border-color: #dc143c; }
-.btn.info    { background: #00b8d9; color: #fff; border-color: #00b8d9; }
-.btn.danger-outline { color: #dc143c; border-color: #dc143c; }
-.btn.danger-outline:hover { background: #fef2f2; }
-</style>
