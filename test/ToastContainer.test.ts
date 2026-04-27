@@ -3,6 +3,12 @@ import { mount, flushPromises } from '@vue/test-utils'
 import ToastContainer from '../src/runtime/components/ToastContainer.vue'
 import { useToast, _setToastConfig } from '../src/runtime/composables/useToast'
 
+// Disable Teleport in tests so the rendered DOM stays inside the wrapper
+// (production behavior teleports the container into <body> to escape any
+// ancestor that creates a containing block via backdrop-filter / transform).
+const mountContainer = (props: Record<string, unknown> = {}) =>
+  mount(ToastContainer, { props: { teleport: false, ...props } })
+
 describe('ToastContainer', () => {
   beforeEach(() => {
     useToast().clear()
@@ -10,12 +16,12 @@ describe('ToastContainer', () => {
   })
 
   it('renders no toasts initially', () => {
-    const wrapper = mount(ToastContainer)
+    const wrapper = mountContainer()
     expect(wrapper.findAll('.toast-card')).toHaveLength(0)
   })
 
   it('applies the default position class (bottom-right)', () => {
-    const wrapper = mount(ToastContainer)
+    const wrapper = mountContainer()
     expect(wrapper.find('.toast-container').classes())
       .toContain('toast-position-bottom-right')
   })
@@ -28,7 +34,7 @@ describe('ToastContainer', () => {
     'bottom-center',
     'bottom-right',
   ] as const)('applies the "toast-position-%s" class', (position) => {
-    const wrapper = mount(ToastContainer, { props: { position } })
+    const wrapper = mountContainer({ position })
     expect(wrapper.find('.toast-container').classes())
       .toContain(`toast-position-${position}`)
   })
@@ -37,7 +43,7 @@ describe('ToastContainer', () => {
     const { show } = useToast()
     show({ title: 'Hello', message: 'World', timeout: 0 })
 
-    const wrapper = mount(ToastContainer)
+    const wrapper = mountContainer()
     await flushPromises()
 
     expect(wrapper.findAll('.toast-card')).toHaveLength(1)
@@ -50,7 +56,7 @@ describe('ToastContainer', () => {
     show({ title: 'First', message: '1', timeout: 0 })
     show({ title: 'Second', message: '2', timeout: 0 })
 
-    const wrapper = mount(ToastContainer)
+    const wrapper = mountContainer()
     await flushPromises()
 
     const cards = wrapper.findAll('.toast-card')
@@ -63,7 +69,7 @@ describe('ToastContainer', () => {
     const { show, toasts } = useToast()
     show({ title: 'A', message: 'B', timeout: 0 })
 
-    const wrapper = mount(ToastContainer)
+    const wrapper = mountContainer()
     await flushPromises()
     expect(toasts.value).toHaveLength(1)
 
@@ -74,12 +80,28 @@ describe('ToastContainer', () => {
   })
 
   it('reactively reflects new toasts added after mount', async () => {
-    const wrapper = mount(ToastContainer)
+    const wrapper = mountContainer()
     expect(wrapper.findAll('.toast-card')).toHaveLength(0)
 
     useToast().info('New', 'Toast', 0)
     await flushPromises()
 
     expect(wrapper.findAll('.toast-card')).toHaveLength(1)
+  })
+
+  it('teleports to document.body by default', async () => {
+    const { show } = useToast()
+    show({ title: 'Teleported', message: 'Hi', timeout: 0 })
+
+    const wrapper = mount(ToastContainer)
+    await flushPromises()
+
+    // With teleport active, the container lives in body, not in the wrapper
+    expect(wrapper.find('.toast-container').exists()).toBe(false)
+    expect(document.body.querySelector('.toast-container')).not.toBeNull()
+    expect(document.body.querySelector('.toast-card')?.textContent)
+      .toContain('Teleported')
+
+    wrapper.unmount()
   })
 })

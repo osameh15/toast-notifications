@@ -1,16 +1,21 @@
 <template>
-  <div :class="['toast-container', `toast-position-${position}`]">
-    <ToastNotification
-      v-for="toast in toasts"
-      :key="toast.id"
-      :model-value="toast.visible"
-      :type="toast.type"
-      :title="toast.title"
-      :message="toast.message"
-      :timeout="toast.timeout"
-      @update:model-value="(v: boolean) => handleClose(toast.id, v)"
-    />
-  </div>
+  <Teleport
+    to="body"
+    :disabled="!teleport"
+  >
+    <div :class="['toast-container', `toast-position-${position}`]">
+      <ToastNotification
+        v-for="toast in toasts"
+        :key="toast.id"
+        :model-value="toast.visible"
+        :type="toast.type"
+        :title="toast.title"
+        :message="toast.message"
+        :timeout="toast.timeout"
+        @update:model-value="(v: boolean) => handleClose(toast.id, v)"
+      />
+    </div>
+  </Teleport>
 </template>
 
 <script setup lang="ts">
@@ -25,9 +30,23 @@ type Position
     | 'top-center'
     | 'bottom-center'
 
-withDefaults(defineProps<{ position?: Position }>(), {
-  position: 'bottom-right',
-})
+withDefaults(
+  defineProps<{
+    position?: Position
+    /**
+     * Render the container into `document.body` via Vue's `<Teleport>` so
+     * `position: fixed` always references the viewport, even when the
+     * container is mounted inside an ancestor that creates its own
+     * containing block (e.g. an element with `backdrop-filter`,
+     * `transform`, `filter`, or `will-change`). Defaults to `true`.
+     */
+    teleport?: boolean
+  }>(),
+  {
+    position: 'bottom-right',
+    teleport: true,
+  },
+)
 
 const { toasts, remove } = useToast()
 
