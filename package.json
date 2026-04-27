@@ -34,6 +34,7 @@
   ],
   "scripts": {
     "prepack": "nuxt-module-build build",
+    "prepublishOnly": "npm run lint && npm run test",
     "dev": "nuxt dev playground",
     "dev:build": "nuxt build playground",
     "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxt prepare playground",
