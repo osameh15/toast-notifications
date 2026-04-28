@@ -5,6 +5,8 @@
 
 A beautiful, zero-dependency toast notification module for **Nuxt 3** — no Vuetify or icon-font required. Drop it in, call `useToast()`, and you're done.
 
+![Three stacked toasts (success, warning, error) with a "Hide all" button on a dark dashboard](./docs/images/toast.png)
+
 - 🎨 **Polished look** — dark radial gradient, colored borders per type, blurred backdrop
 - 🧩 **Standalone** — no Vuetify, no MDI, no extra CSS framework
 - ⚡️ **Auto-mounted** — no boilerplate, just call `useToast().success(...)`
@@ -81,6 +83,10 @@ const onSave = async () => {
   <button @click="onSave">Save</button>
 </template>
 ```
+
+The bundled playground exercises every feature — convenience methods, custom `show()`, runtime `maxToasts` control, and live state:
+
+![Quick demo page with the four type buttons, custom show controls, and the Max toasts stepper](./docs/images/Quickdemo.png)
 
 ---
 
@@ -310,7 +316,9 @@ Then place a `<ToastContainer>` yourself, wherever you want it:
 </template>
 ```
 
-You can mount more than one — they'll all subscribe to the same toast state, so a single `useToast().info(...)` call shows up in every container.
+You can mount more than one — they'll all subscribe to the same toast state, so a single `useToast().info(...)` call shows up in every container:
+
+![Two simultaneous containers — a top-center toast and a bottom-right toast — both showing the same notification](./docs/images/manualMount.png)
 
 ---
 
@@ -356,6 +364,22 @@ font-family:
 ```
 
 If you self-host fonts or want a different typeface, disable the loaders and override `font-family` on `.toast-card`, `.toast-title`, and `.toast-message` from your own stylesheet.
+
+### Right-to-left support
+
+When the toast `title` or `message` contains Arabic / Persian script, the component sets `dir="rtl"` on the card automatically — the close button moves to the left, icon spacing flips, and Shabnam renders the text:
+
+![Three Persian toasts stacked with the close button on the left and Shabnam font](./docs/images/RTL-toast.png)
+
+LTR and RTL toasts can coexist in the same stack without configuration:
+
+![Mixed stack — English "Network Error" and "Sync Complete" toasts plus a Persian "خطا در عملیات" toast](./docs/images/toast2.png)
+
+### Persistent toasts and Hide all
+
+Toasts created with `timeout: 0` stay open until dismissed. When two or more are visible — persistent or not — a "Hide all" button appears above the stack to clear them all at once:
+
+![Four persistent "Action required" warning toasts with the Hide all button on top](./docs/images/toast1.png)
 
 ---
 
