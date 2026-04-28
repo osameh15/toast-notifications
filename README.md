@@ -32,6 +32,8 @@ A beautiful, zero-dependency toast notification module for **Nuxt 3** — no Vue
 - [Development](#development)
 - [License](#license)
 
+For deeper technical reference (architecture, design rationale, contributing), see [`docs/`](./docs/README.md).
+
 ---
 
 ## Installation
