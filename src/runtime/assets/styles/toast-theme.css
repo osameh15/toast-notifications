@@ -1,0 +1,57 @@
+/*
+ * Theme variables for nuxt-toast-notification.
+ *
+ * Default values target the dark theme (matches the original look).
+ * Light theme overrides are applied when an ancestor (or the toast
+ * container itself) carries `data-theme="light"`.
+ *
+ * The four type-color borders (#30e0a1 / #ffd700 / #dc143c / #00ffff)
+ * stay constant across themes — they are part of the brand identity.
+ */
+
+:root,
+[data-theme='dark'] {
+  --toast-card-bg: radial-gradient(
+    120% 104.06% at 50.07% -4%,
+    rgba(51, 78, 104, 0.95) 1.9%,
+    rgba(25, 29, 35, 0.95) 100%
+  );
+  --toast-card-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  --toast-title-color: white;
+  --toast-message-color: rgba(255, 255, 255, 0.9);
+  --toast-close-color: white;
+  --toast-close-hover-bg: rgba(255, 255, 255, 0.1);
+  --toast-close-focus-outline: rgba(255, 255, 255, 0.6);
+
+  --toast-hideall-bg: rgba(25, 29, 35, 0.92);
+  --toast-hideall-color: rgba(255, 255, 255, 0.85);
+  --toast-hideall-border: rgba(255, 255, 255, 0.18);
+  --toast-hideall-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  --toast-hideall-hover-bg: rgba(220, 20, 60, 0.18);
+  --toast-hideall-hover-border: rgba(220, 20, 60, 0.55);
+  --toast-hideall-hover-color: white;
+}
+
+[data-theme='light'] {
+  --toast-card-bg: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.98) 0%,
+    rgba(248, 250, 252, 0.98) 100%
+  );
+  --toast-card-shadow:
+    0 8px 24px rgba(15, 23, 42, 0.12),
+    0 0 0 1px rgba(15, 23, 42, 0.04);
+  --toast-title-color: rgb(15, 23, 42);
+  --toast-message-color: rgba(15, 23, 42, 0.7);
+  --toast-close-color: rgba(15, 23, 42, 0.55);
+  --toast-close-hover-bg: rgba(15, 23, 42, 0.08);
+  --toast-close-focus-outline: rgba(15, 23, 42, 0.45);
+
+  --toast-hideall-bg: rgba(255, 255, 255, 0.96);
+  --toast-hideall-color: rgba(15, 23, 42, 0.78);
+  --toast-hideall-border: rgba(15, 23, 42, 0.1);
+  --toast-hideall-shadow: 0 4px 20px rgba(15, 23, 42, 0.12);
+  --toast-hideall-hover-bg: rgba(220, 20, 60, 0.08);
+  --toast-hideall-hover-border: rgba(220, 20, 60, 0.4);
+  --toast-hideall-hover-color: rgb(15, 23, 42);
+}

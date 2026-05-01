@@ -1,6 +1,6 @@
 {
   "name": "nuxt-toast-notification",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "A beautiful, framework-agnostic toast notification module for Nuxt 3 and Nuxt 4 — no Vuetify required.",
   "repository": {
     "type": "git",

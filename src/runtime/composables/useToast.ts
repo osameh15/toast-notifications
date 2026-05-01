@@ -25,6 +25,8 @@ export interface ToastConfig {
   defaultTimeout: number
 }
 
+export type ToastTheme = 'dark' | 'light'
+
 const toasts = ref<ToastInstance[]>([])
 let nextId = 0
 
@@ -32,6 +34,8 @@ const config = reactive<ToastConfig>({
   maxToasts: 3,
   defaultTimeout: 5000,
 })
+
+const theme = ref<ToastTheme>('dark')
 
 /**
  * Update one or more runtime settings. Reactive — anywhere `config` is read
@@ -55,6 +59,14 @@ const setConfig = (next: Partial<ToastConfig>): void => {
 
 /** @deprecated Use `useToast().setConfig(...)` instead. Kept for the auto-mount plugin. */
 export const _setToastConfig = setConfig
+
+/** Switch the global toast theme. Reactive — every container re-renders. */
+const setTheme = (next: ToastTheme): void => {
+  theme.value = next
+}
+
+/** Internal: invoked by the auto-mount plugin to seed the theme from module options. */
+export const _setToastTheme = setTheme
 
 export const useToast = () => {
   const show = ({ type = 'info', title, message, timeout }: ToastOptions): number => {
@@ -115,5 +127,9 @@ export const useToast = () => {
     config: readonlyConfig,
     /** Update runtime config. Trims excess toasts when `maxToasts` decreases. */
     setConfig,
+    /** Reactive global theme — `'dark'` or `'light'`. Read-only. */
+    theme: readonly(theme),
+    /** Switch theme at runtime. All containers reactively pick up the change. */
+    setTheme,
   }
 }

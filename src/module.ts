@@ -21,6 +21,12 @@ export interface ModuleOptions {
   maxToasts?: number
   /** Default auto-dismiss timeout in milliseconds. Set `0` to disable. Defaults to `5000`. */
   defaultTimeout?: number
+  /**
+   * Initial visual theme. `'dark'` keeps the original dark gradient look;
+   * `'light'` swaps colors for a light card on a dark or light page. Can
+   * also be changed at runtime via `useToast().setTheme(...)`. Defaults to `'dark'`.
+   */
+  theme?: 'dark' | 'light'
   /** Component name prefix. Defaults to `Toast` (so components are `<ToastNotification>` and `<ToastContainer>`). */
   prefix?: string
   /**
@@ -49,6 +55,7 @@ declare module '@nuxt/schema' {
       position: ToastPosition
       maxToasts: number
       defaultTimeout: number
+      theme: 'dark' | 'light'
     }
   }
 }
@@ -65,6 +72,7 @@ export default defineNuxtModule<ModuleOptions>({
     position: 'bottom-right',
     maxToasts: 3,
     defaultTimeout: 5000,
+    theme: 'dark',
     prefix: 'Toast',
     autoMount: true,
     loadShabnamFont: true,
@@ -77,7 +85,12 @@ export default defineNuxtModule<ModuleOptions>({
       position: options.position!,
       maxToasts: options.maxToasts!,
       defaultTimeout: options.defaultTimeout!,
+      theme: options.theme!,
     }
+
+    // Theme variables — must always be loaded so var(--toast-*) resolves.
+    nuxt.options.css = nuxt.options.css || []
+    nuxt.options.css.push(resolver.resolve('./runtime/assets/styles/toast-theme.css'))
 
     addComponent({
       name: `${options.prefix}Notification`,
@@ -94,7 +107,6 @@ export default defineNuxtModule<ModuleOptions>({
     })
 
     if (options.loadShabnamFont) {
-      nuxt.options.css = nuxt.options.css || []
       nuxt.options.css.push(resolver.resolve('./runtime/assets/styles/toast-fonts.css'))
     }
 

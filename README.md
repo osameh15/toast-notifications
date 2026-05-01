@@ -28,6 +28,7 @@ A beautiful, zero-dependency toast notification module for **Nuxt 3** — no Vue
 - [Component API](#component-api)
 - [Toast types](#toast-types)
 - [Positions](#positions)
+- [Theme](#theme)
 - [Manual mounting](#manual-mounting)
 - [Customization](#customization)
 - [TypeScript](#typescript)
@@ -101,6 +102,7 @@ export default defineNuxtConfig({
     position: "bottom-right",
     maxToasts: 3,
     defaultTimeout: 5000,
+    theme: "dark",
     prefix: "Toast",
     autoMount: true,
   },
@@ -112,6 +114,7 @@ export default defineNuxtConfig({
 | `position`       | `'top-left' \| 'top-center' \| 'top-right' \| 'bottom-left' \| 'bottom-center' \| 'bottom-right'` | `'bottom-right'` | Where the auto-mounted container sits on screen.                                                        |
 | `maxToasts`      | `number`                                                                                          | `3`              | Maximum number of visible toasts. Older ones drop off the front when exceeded.                          |
 | `defaultTimeout` | `number`                                                                                          | `5000`           | Default auto-dismiss delay in ms. Use `0` per-call to keep a toast until manually closed.               |
+| `theme`          | `'dark' \| 'light'`                                                                               | `'dark'`         | Initial visual theme. Can be changed at runtime via `useToast().setTheme(...)` or per-container with the `theme` prop. |
 | `prefix`         | `string`                                                                                          | `'Toast'`        | Component name prefix. With the default, components are `<ToastNotification>` and `<ToastContainer>`.   |
 | `autoMount`      | `boolean`                                                                                         | `true`           | When `true`, mounts a `<ToastContainer>` automatically on the client. Set `false` to mount it yourself. |
 | `loadShabnamFont`| `boolean`                                                                                         | `true`           | Inject the bundled Persian "Shabnam" font (5 weights, woff2). Uses `unicode-range` so the file is only downloaded for documents that contain Arabic / Persian characters. |
@@ -288,6 +291,47 @@ Six positions are supported. You can set the **default** globally via `toast.pos
 │ bottom-left  bottom-center  bottom-right   │
 └────────────────────────────────────────────┘
 ```
+
+---
+
+## Theme
+
+The library ships with a **dark** theme (default) and a **light** theme. Switch globally at runtime, or override per-container.
+
+```ts
+// Set the initial theme via module options
+// nuxt.config.ts
+toast: { theme: 'light' }
+```
+
+```vue
+<script setup lang="ts">
+const toast = useToast()
+
+// Read the current theme reactively
+console.log(toast.theme.value) // 'dark' or 'light'
+
+// Switch globally — every <ToastContainer> on the page reactively updates
+toast.setTheme('light')
+
+// Common pattern: follow the user's system preference
+const sync = () => toast.setTheme(
+  window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light',
+)
+sync()
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', sync)
+</script>
+```
+
+Per-container override (useful for e.g. an always-light toast inside a dark dashboard):
+
+```vue
+<ToastContainer theme="light" />
+```
+
+The `theme` prop, when set, takes precedence over `useToast().theme`.
+
+The four type-color borders (`#30e0a1` / `#FFD700` / `#DC143C` / `#00FFFF`) stay constant in both themes — they're part of the brand identity. Only neutrals (card background, text, close button, Hide-all button) swap.
 
 ---
 

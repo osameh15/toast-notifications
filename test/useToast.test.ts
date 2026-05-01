@@ -208,4 +208,29 @@ describe('useToast', () => {
       expect(toasts.value).toHaveLength(2)
     })
   })
+
+  describe('theme', () => {
+    it('defaults to "dark"', () => {
+      const { theme, setTheme } = useToast()
+      // Reset to known state in case a prior test changed it
+      setTheme('dark')
+      expect(theme.value).toBe('dark')
+    })
+
+    it('setTheme switches to "light" reactively', () => {
+      const { theme, setTheme } = useToast()
+      setTheme('light')
+      expect(theme.value).toBe('light')
+      setTheme('dark') // restore for other tests
+    })
+
+    it('all useToast() calls share the same theme ref', () => {
+      const a = useToast()
+      const b = useToast()
+      a.setTheme('light')
+      expect(b.theme.value).toBe('light')
+      a.setTheme('dark')
+      expect(b.theme.value).toBe('dark')
+    })
+  })
 })

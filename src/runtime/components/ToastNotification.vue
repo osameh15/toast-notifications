@@ -185,16 +185,12 @@ defineExpose({ close })
   min-width: 350px;
   max-width: 450px;
   padding: 24px;
-  background: radial-gradient(
-    120% 104.06% at 50.07% -4%,
-    rgba(51, 78, 104, 0.95) 1.9%,
-    rgba(25, 29, 35, 0.95) 100%
-  );
+  background: var(--toast-card-bg);
   -webkit-backdrop-filter: blur(12.5px);
   backdrop-filter: blur(12.5px);
   border-radius: 10px;
-  color: white;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  color: var(--toast-title-color);
+  box-shadow: var(--toast-card-shadow);
   pointer-events: auto;
   font-family: 'Inter', 'Shabnam', system-ui, -apple-system, BlinkMacSystemFont,
     'Segoe UI Variable Text', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -221,11 +217,11 @@ defineExpose({ close })
   justify-content: center;
   background: transparent;
   border: none;
-  color: white;
+  color: var(--toast-close-color);
   cursor: pointer;
   border-radius: 50%;
   z-index: 10;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 /* Move close button to the start (= left) when the toast is RTL */
@@ -235,10 +231,10 @@ defineExpose({ close })
 }
 
 .toast-close-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--toast-close-hover-bg);
 }
 .toast-close-btn:focus-visible {
-  outline: 2px solid rgba(255, 255, 255, 0.6);
+  outline: 2px solid var(--toast-close-focus-outline);
   outline-offset: 2px;
 }
 
@@ -260,7 +256,7 @@ defineExpose({ close })
   font-size: 18px;
   font-weight: 600;
   margin: 0;
-  color: white;
+  color: var(--toast-title-color);
   text-align: center;
   font-family: inherit;
 }
@@ -274,7 +270,7 @@ defineExpose({ close })
   font-size: 14px;
   line-height: 1.5;
   margin: 0;
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--toast-message-color);
   text-align: center;
   font-family: inherit;
 }

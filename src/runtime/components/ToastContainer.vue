@@ -3,7 +3,10 @@
     to="body"
     :disabled="!teleport"
   >
-    <div :class="['toast-container', `toast-position-${position}`]">
+    <div
+      :class="['toast-container', `toast-position-${position}`]"
+      :data-theme="effectiveTheme"
+    >
       <button
         v-if="showHideAll"
         type="button"
@@ -64,6 +67,8 @@ type Position
     | 'top-center'
     | 'bottom-center'
 
+type ThemeMode = 'dark' | 'light'
+
 const props = withDefaults(
   defineProps<{
     position?: Position
@@ -86,16 +91,26 @@ const props = withDefaults(
      * Defaults to `true`.
      */
     showHideAllButton?: boolean
+    /**
+     * Override the global theme for this container. When set, takes
+     * precedence over `useToast().theme`. When omitted, the container
+     * follows the global theme (which defaults to `'dark'` and can be
+     * changed at runtime via `useToast().setTheme(...)`).
+     */
+    theme?: ThemeMode
   }>(),
   {
     position: 'bottom-right',
     teleport: true,
     hideAllLabel: 'Hide all',
     showHideAllButton: true,
+    theme: undefined,
   },
 )
 
-const { toasts, remove, clear } = useToast()
+const { toasts, remove, clear, theme: globalTheme } = useToast()
+
+const effectiveTheme = computed<ThemeMode>(() => props.theme ?? globalTheme.value)
 
 const showHideAll = computed(
   () => props.showHideAllButton && toasts.value.length >= 2,
@@ -173,13 +188,13 @@ const hideAll = (): void => {
   gap: 8px;
   padding: 10px 16px;
 
-  background: rgba(25, 29, 35, 0.92);
+  background: var(--toast-hideall-bg);
   -webkit-backdrop-filter: blur(12.5px);
   backdrop-filter: blur(12.5px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  border: 1px solid var(--toast-hideall-border);
   border-radius: 8px;
-  color: rgba(255, 255, 255, 0.85);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  color: var(--toast-hideall-color);
+  box-shadow: var(--toast-hideall-shadow);
 
   font-family:
     'Inter',
@@ -198,7 +213,7 @@ const hideAll = (): void => {
   line-height: 1;
   letter-spacing: 0.01em;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -210,9 +225,9 @@ const hideAll = (): void => {
 }
 
 .hide-all-btn:hover {
-  background: rgba(220, 20, 60, 0.18);
-  border-color: rgba(220, 20, 60, 0.55);
-  color: white;
+  background: var(--toast-hideall-hover-bg);
+  border-color: var(--toast-hideall-hover-border);
+  color: var(--toast-hideall-hover-color);
 }
 .hide-all-btn:hover svg { opacity: 1; }
 

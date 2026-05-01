@@ -89,6 +89,35 @@ describe('ToastContainer', () => {
     expect(wrapper.findAll('.toast-card')).toHaveLength(1)
   })
 
+  describe('theme', () => {
+    it('applies data-theme="dark" by default', () => {
+      const { setTheme } = useToast()
+      setTheme('dark')
+      const wrapper = mountContainer()
+      expect(wrapper.find('.toast-container').attributes('data-theme')).toBe('dark')
+    })
+
+    it('reflects setTheme(\'light\') from the composable', async () => {
+      const { setTheme } = useToast()
+      setTheme('dark')
+      const wrapper = mountContainer()
+      expect(wrapper.find('.toast-container').attributes('data-theme')).toBe('dark')
+
+      setTheme('light')
+      await flushPromises()
+      expect(wrapper.find('.toast-container').attributes('data-theme')).toBe('light')
+
+      setTheme('dark') // restore
+    })
+
+    it('container "theme" prop overrides the composable theme', () => {
+      const { setTheme } = useToast()
+      setTheme('dark')
+      const wrapper = mountContainer({ theme: 'light' })
+      expect(wrapper.find('.toast-container').attributes('data-theme')).toBe('light')
+    })
+  })
+
   it('teleports to document.body by default', async () => {
     const { show } = useToast()
     show({ title: 'Teleported', message: 'Hi', timeout: 0 })
